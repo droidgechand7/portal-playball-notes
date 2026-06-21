@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玩球直播 · 简明知识库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #fbe9d7 0%, #f5d4b8 40%, #f2c7a8 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .page-wrapper {
+            max-width: 1180px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 48px 48px 32px 32px;
+            box-shadow: 0 20px 40px -12px rgba(160, 100, 60, 0.25), 0 8px 24px rgba(200, 140, 100, 0.15);
+            padding: 3rem 2.5rem;
+            transition: all 0.2s ease;
+        }
+
+        /* 标题区 */
+        .hero {
+            text-align: center;
+            padding-bottom: 2.5rem;
+            border-bottom: 2px dashed #efd5be;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 550;
+            letter-spacing: -0.02em;
+            color: #6b3f2a;
+            background: linear-gradient(135deg, #824f32, #b3724a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero .subhead {
+            font-size: 1.1rem;
+            color: #7c5b44;
+            background: #f5e2d2;
+            display: inline-block;
+            padding: 0.3rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            box-shadow: inset 0 1px 3px rgba(255, 225, 200, 0.6);
+        }
+
+        .hero p {
+            margin-top: 1.2rem;
+            color: #5f4637;
+            font-size: 1.05rem;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* 栅格布局：目录感 + 卡片 */
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin: 2.5rem 0 2rem;
+        }
+
+        .grid-card {
+            background: #fffbf8;
+            border-radius: 28px;
+            padding: 1.8rem 1.5rem 1.8rem 1.5rem;
+            box-shadow: 0 6px 16px rgba(170, 120, 80, 0.08), 0 0 0 1px rgba(220, 180, 150, 0.2);
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+
+        .grid-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 28px -6px rgba(150, 100, 60, 0.18), 0 0 0 1px #dbb69b;
+        }
+
+        .grid-card .card-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+
+        .grid-card h3 {
+            font-size: 1.3rem;
+            font-weight: 550;
+            color: #5d3b28;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .grid-card p {
+            color: #4f3c30;
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .grid-card ul {
+            margin-top: 0.6rem;
+            padding-left: 1.2rem;
+            color: #4f3c30;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .grid-card li {
+            margin-bottom: 0.2rem;
+        }
+
+        .grid-card a {
+            color: #b2633a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #d6aa8b;
+            transition: border 0.15s;
+        }
+
+        .grid-card a:hover {
+            border-bottom: 1px solid #b2633a;
+        }
+
+        /* 提示区 + 相关信息 两列 */
+        .info-split {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin: 1.8rem 0 2rem;
+        }
+
+        .info-split > div {
+            flex: 1 1 240px;
+            background: #f7ede4;
+            border-radius: 24px;
+            padding: 1.5rem 1.6rem;
+            box-shadow: inset 0 0 0 1px #ebd7c8, 0 4px 8px rgba(150, 100, 60, 0.05);
+        }
+
+        .info-split h4 {
+            font-size: 1.1rem;
+            font-weight: 550;
+            color: #5d3b28;
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-split p, .info-split li {
+            font-size: 0.95rem;
+            color: #4f3c30;
+            line-height: 1.6;
+        }
+
+        .info-split ul {
+            padding-left: 1.2rem;
+            margin-top: 0.3rem;
+        }
+
+        .info-split li {
+            margin-bottom: 0.1rem;
+        }
+
+        .reminder-tag {
+            display: inline-block;
+            background: #e4cbaf;
+            color: #3f2b1e;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.15rem 0.9rem;
+            border-radius: 40px;
+            margin-right: 0.4rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* 场景/FAQ 摘要卡片 */
+        .faq-summary {
+            background: #fff6ef;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            margin: 1rem 0 1.8rem;
+            box-shadow: 0 0 0 1px #eddacb;
+        }
+
+        .faq-summary h4 {
+            font-size: 1.25rem;
+            color: #5d3b28;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .faq-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e7d3c2;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-weight: 550;
+            color: #6b3f2a;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .faq-item p {
+            color: #4f3c30;
+            font-size: 0.93rem;
+            line-height: 1.6;
+        }
+
+        /* 句子内嵌链接 */
+        .inline-link {
+            color: #a55a31;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px solid #dbb49a;
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        .inline-link:hover {
+            border-bottom: 1px solid #a55a31;
+            color: #7a4222;
+        }
+
+        /* 底部 */
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #e5cfbc;
+            color: #7a5f4b;
+            font-size: 0.9rem;
+        }
+
+        .footer-note a {
+            color: #8c5b3d;
+            text-decoration: none;
+            border-bottom: 1px dotted #c9ab93;
+        }
+
+        .footer-note a:hover {
+            border-bottom: 1px solid #7a452a;
+        }
+
+        /* 响应式 */
+        @media (max-width: 700px) {
+            .main-card {
+                padding: 2rem 1.2rem;
+                border-radius: 32px 32px 24px 24px;
+            }
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+            .hero .subhead {
+                font-size: 0.95rem;
+                padding: 0.2rem 1.4rem;
+            }
+            .directory-grid {
+                gap: 1.2rem;
+            }
+            .grid-card {
+                padding: 1.4rem 1.2rem;
+            }
+            .info-split > div {
+                padding: 1.2rem 1.2rem;
+            }
+            .faq-summary {
+                padding: 1.3rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            .grid-card ul {
+                padding-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+    <div class="main-card">
+
+        <!-- hero 简明指南 -->
+        <div class="hero">
+            <h1>玩球直播 · 知识速览</h1>
+            <span class="subhead">简明指南 · 访问提醒 · 常见了解</span>
+            <p>这里是围绕「玩球直播」整理的一份轻量知识页，没有复杂术语，只讲你用得上的信息与提示。无论你是初次接触还是想温习要点，都能在这里找到清晰的脉络。</p>
+        </div>
+
+        <!-- 目录感布局：四个卡片  -->
+        <div class="directory-grid">
+            <div class="grid-card">
+                <span class="card-icon">📋</span>
+                <h3>平台概览</h3>
+                <p><a href="https://portal-playball.com" class="inline-link">玩球直播</a> 是一个以体育赛事与实时互动为核心的内容平台，提供多视角直播、赛中讨论以及社区动态。界面简洁，分类清晰，涵盖足球、篮球、网球等多个热门项目。</p>
+            </div>
+            <div class="grid-card">
+                <span class="card-icon">🔍</span>
+                <h3>使用指引</h3>
+                <ul>
+                    <li>无需注册即可浏览部分公开内容</li>
+                    <li>登录后解锁关注、弹幕与高清选项</li>
+                    <li>支持网页端与移动端浏览器访问</li>
+                    <li>建议在稳定的网络环境下使用</li>
+                </ul>
+            </div>
+            <div class="grid-card">
+                <span class="card-icon">🎯</span>
+                <h3>适用场景</h3>
+                <p>赛事直播观看、赛后集锦回顾、与同好交流战术与观点。适合日常观赛、通勤途中刷动态、或与朋友一起边看边聊。</p>
+            </div>
+            <div class="grid-card">
+                <span class="card-icon">📌</span>
+                <h3>特点速写</h3>
+                <p>低延迟推送、多语言界面（含中文）、赛事日历集成、弹幕气氛活跃。平台持续优化画质与兼容性，适配不同设备体验。</p>
+            </div>
+        </div>
+
+        <!-- 提示区 + 相关信息区 -->
+        <div class="info-split">
+            <div>
+                <h4><span>💡</span> 访问提醒</h4>
+                <p><span class="reminder-tag">建议</span> 首次使用时，可直接在浏览器打开 <strong>portal-playball.com</strong>，平台主页会引导你进入直播大厅或赛事列表。如遇到加载缓慢，可尝试刷新或切换网络环境。</p>
+                <p style="margin-top: 0.6rem;"><span class="reminder-tag">注意</span> 部分高级功能或高清流可能需要登录账户，请留意页面提示。</p>
+            </div>
+            <div>
+                <h4><span>📎</span> 相关信息</h4>
+                <ul>
+                    <li>内容分类：直播 / 回放 / 资讯 / 社区</li>
+                    <li>语言支持：中文、英文及部分亚洲语言</li>
+                    <li>反馈渠道：站内帮助中心或客服表单</li>
+                    <li>更新动态：赛季期间会增设专属专题页</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ 摘要卡片（差异化内容） -->
+        <div class="faq-summary">
+            <h4><span>❓</span> 常见疑问 · 摘要</h4>
+            <div class="faq-item">
+                <strong>访问 <a href="https://portal-playball.com" class="inline-link">玩球直播</a> 需要安装软件吗？</strong>
+                <p>不需要。平台基于网页构建，直接通过现代浏览器打开即可使用，无需下载额外客户端或插件。</p>
+            </div>
+            <div class="faq-item">
+                <strong>直播画质可以调整吗？</strong>
+                <p>通常提供流畅、高清等多个选项，具体视赛事源与网络状况而定。你可以在播放器内手动切换。</p>
+            </div>
+            <div class="faq-item">
+                <strong>是否支持赛后回看？</strong>
+                <p>大部分重点赛事会保留回放，并附带关键事件标记，方便快速定位。回放入口一般位于赛事详情页。</p>
+            </div>
+            <div class="faq-item">
+                <strong>弹幕或评论区有什么规则？</strong>
+                <p>请保持友善交流，避免恶意刷屏或攻击性言论。平台有基础过滤机制，共同维护良好氛围。</p>
+            </div>
+        </div>
+
+        <!-- 底部 温和收尾 -->
+        <div class="footer-note">
+            <p>希望这份简明说明能帮助你更顺畅地了解 <a href="https://portal-playball.com" class="inline-link">玩球直播</a>。信息基于公开资料整理，实际体验以平台为准。祝观赛愉快！</p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
